@@ -3,9 +3,9 @@ from requests.exceptions import HTTPError
 from bs4 import BeautifulSoup
 import lxml
 from csv import writer
+from is_isbn.is_isbn import is_isbn
 
-from is_isbn import is_isbn
-
+# Entry URL
 palitra_url = 'https://www.palitral.ge/tsignebi.html?view=catalog&lang=ka-GE&start='
 
 
@@ -75,12 +75,10 @@ with open('books_palitra.csv', 'w', encoding='utf-8', newline='') as csv_file:
             price = book.find('div', {'class': 'item_price'}).find(
                 'span').next_sibling.strip().split(' ')[0]
             try:
-                isbn = book.find('div', {'class': 'item-isbn'}
-                                 ).find('span').next_sibling.strip()
-                if is_isbn.is_isbn(isbn):
-                    isbn = isbn
-                else:
-                    isbn = None
+                # Add only valid ISBN code. If it doesn't exist add string 'None'.
+                possible_isbn = book.find('div', {'class': 'item-isbn'}).find(
+                    'span').next_sibling.strip()
+                isbn = possible_isbn if is_isbn(possible_isbn) else 'None'
             except:
                 pass
 
