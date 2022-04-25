@@ -6,12 +6,12 @@ verify_ssl = true
 [dev-packages]
 autopep8 = "*"
 pylint = "*"
-v = {editable = true,version = "*"}
 
 [packages]
 requests = "*"
 lxml = "*"
 bs4 = "*"
+is-isbn = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.10"
